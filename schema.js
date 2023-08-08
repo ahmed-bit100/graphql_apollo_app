@@ -30,4 +30,17 @@ type Query {
     authors : [Author]
     author(id:ID!): Author
 }
+type Mutation {
+    addBook(book: AddBookInput): Book
+    deleteBook(id: ID!) : [Book]
+    editBook(id:ID!, edits:EditBookInput!) : Book
+}
+input AddBookInput {
+    title: String!,
+    genres:[String!]!,
+}
+input EditBookInput {
+    title: String
+    genres: [String!]
+ }
 `;

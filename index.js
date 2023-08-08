@@ -24,6 +24,27 @@ const resolvers = {
     author: (parent) => db.authors.find((el) => el.id === parent.author_id),
     book: (parent) => db.books.find((el) => el.id === parent.book_id),
   },
+  Mutation: {
+    deleteBook(_, args) {
+      db.books.filter((el) => el.id !== args.id);
+      console.log(args.id);
+      return db.books;
+    },
+    addBook(_, args) {
+      let book = {
+        ...args.book,
+        id: Math.floor(Math.random() * 10000).toString(),
+      };
+      db.books.push(book);
+      return book;
+    },
+    editBook(_, args) {
+      db.books = db.books.map((el) =>
+        el.id === args.id ? {...el, ...args.edits} : el
+      );
+      return db.books.find((el) => (el.id = args.id));
+    },
+  },
 };
 
 const server = new ApolloServer({
